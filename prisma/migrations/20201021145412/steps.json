@@ -1,0 +1,29 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "tag": "CreateField",
+      "model": "User",
+      "field": "passions",
+      "type": "UserPassion",
+      "arity": "List"
+    },
+    {
+      "tag": "CreateField",
+      "model": "User",
+      "field": "behaviors",
+      "type": "UserBehavior",
+      "arity": "List"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "User",
+      "field": "UserPassion"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "User",
+      "field": "UserBehavior"
+    }
+  ]
+}

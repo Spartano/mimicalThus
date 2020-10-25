@@ -1,0 +1,13 @@
+overwrite: true
+schema: "http://localhost:3000/api"
+documents: "./hooksGenerator/*.{js, jsx, ts,tsx}"
+generates:
+  generated/graphql.tsx:
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+      - "typescript-react-apollo"
+    config:
+      withHooks: true
+      withMutationFn: true
+      withRefetchFn: true

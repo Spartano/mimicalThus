@@ -1,0 +1,56 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "tag": "CreateField",
+      "model": "UserBehavior",
+      "field": "Behavior",
+      "type": "Behavior",
+      "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "UserBehavior",
+          "field": "Behavior"
+        },
+        "directive": "relation"
+      }
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "UserBehavior",
+          "field": "Behavior"
+        },
+        "directive": "relation"
+      },
+      "argument": "fields",
+      "value": "[behaviorId]"
+    },
+    {
+      "tag": "CreateArgument",
+      "location": {
+        "tag": "Directive",
+        "path": {
+          "tag": "Field",
+          "model": "UserBehavior",
+          "field": "Behavior"
+        },
+        "directive": "relation"
+      },
+      "argument": "references",
+      "value": "[id]"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "UserBehavior",
+      "field": "Behaviour"
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "tag": "CreateField",
+      "model": "User",
+      "field": "UserPassion",
+      "type": "UserPassion",
+      "arity": "List"
+    },
+    {
+      "tag": "CreateField",
+      "model": "User",
+      "field": "UserBehavior",
+      "type": "UserBehavior",
+      "arity": "List"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "User",
+      "field": "passions"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "User",
+      "field": "behaviors"
+    },
+    {
+      "tag": "UpdateField",
+      "model": "UserPassion",
+      "field": "userId",
+      "arity": "Required"
+    },
+    {
+      "tag": "UpdateField",
+      "model": "UserPassion",
+      "field": "User",
+      "arity": "Required"
+    },
+    {
+      "tag": "UpdateField",
+      "model": "UserPassion",
+      "field": "passionId",
+      "arity": "Required"
+    },
+    {
+      "tag": "UpdateField",
+      "model": "UserPassion",
+      "field": "Passion",
+      "arity": "Required"
+    },
+    {
+      "tag": "UpdateField",
+      "model": "UserBehavior",
+      "field": "User",
+      "arity": "Required"
+    },
+    {
+      "tag": "UpdateField",
+      "model": "UserBehavior",
+      "field": "userId",
+      "arity": "Required"
+    },
+    {
+      "tag": "UpdateField",
+      "model": "UserBehavior",
+      "field": "Behaviour",
+      "arity": "Required"
+    },
+    {
+      "tag": "UpdateField",
+      "model": "UserBehavior",
+      "field": "behaviorId",
+      "arity": "Required"
+    }
+  ]
+}

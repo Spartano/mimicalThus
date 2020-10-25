@@ -1,0 +1,48 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url = "***"
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  createdAt DateTime @default(now())
+  email     String   @unique
+  name      String
+
+  UserPassion  UserPassion[]
+  UserBehavior UserBehavior[]
+}
+
+model UserPassion {
+  id        Int      @id @default(autoincrement())
+  value     Int
+  userId    Int?
+  User      User?    @relation(fields: [userId], references: [id])
+  passionId Int?
+  Passion   Passion? @relation(fields: [passionId], references: [id])
+}
+
+model UserBehavior {
+  id         Int       @id @default(autoincrement())
+  value      Int
+  User       User?     @relation(fields: [userId], references: [id])
+  userId     Int?
+  Behaviour  Behavior? @relation(fields: [behaviorId], references: [id])
+  behaviorId Int?
+}
+
+model Passion {
+  id          Int           @id @default(autoincrement())
+  name        String        @unique
+  UserPassion UserPassion[]
+}
+
+model Behavior {
+  id           Int            @id @default(autoincrement())
+  name         String         @unique
+  UserBehavior UserBehavior[]
+}

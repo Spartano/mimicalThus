@@ -1,0 +1,29 @@
+{
+  "version": "0.3.14-fixed",
+  "steps": [
+    {
+      "tag": "DeleteModel",
+      "model": "FakeUsers"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "UserPassion",
+      "field": "FakeUsers"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "UserPassion",
+      "field": "fakeUsersId"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "UserBehavior",
+      "field": "FakeUsers"
+    },
+    {
+      "tag": "DeleteField",
+      "model": "UserBehavior",
+      "field": "fakeUsersId"
+    }
+  ]
+}
