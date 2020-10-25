@@ -110,6 +110,7 @@ function Index({ session }) {
       <AccordionRow user={user} key={i} userEntities={userData.user} />
     ));
   };
+
   return (
     <Layout>
       <GridContainer>

@@ -41,13 +41,25 @@ export default function AccordionRow({ user, userEntities }: Props) {
 
   const similarPassions = UserPassion.filter(({ id, Passion }) => {
     return userEntities.UserPassion.some(
-      ({ Passion: UserPassion }) => UserPassion.id === Passion.id
+      ({ Passion: entityPassion }) => entityPassion.id === Passion.id
+    );
+  });
+
+  const notSimilarPassions = UserPassion.filter(({ id, Passion }) => {
+    return userEntities.UserPassion.every(
+      ({ Passion: entityPassion }) => entityPassion.id !== Passion.id
     );
   });
 
   const similarBehaviors = UserBehavior.filter(({ id, Behavior }) => {
     return userEntities.UserBehavior.some(
       ({ Behavior: UserBehavior }) => UserBehavior.id === Behavior.id
+    );
+  });
+
+  const notSimilarBehaviors = UserBehavior.filter(({ id, Behavior }) => {
+    return userEntities.UserBehavior.every(
+      ({ Behavior: UserBehavior }) => UserBehavior.id !== Behavior.id
     );
   });
 
@@ -93,7 +105,16 @@ export default function AccordionRow({ user, userEntities }: Props) {
 
       <AccordionDetails>
         <Box flex={1}>
-          {UserBehavior.map(({ Behavior, value }, i) => (
+          {similarBehaviors.map(({ Behavior, value }, i) => (
+            <Box key={i} display="flex" flexDirection="column" pr={1}>
+              <Chip label={Behavior.name} size="small" />
+              <Box pl={0.5} pr={1}>
+                <LinearWithValueLabel progress={value} />
+              </Box>
+            </Box>
+          ))}
+
+          {notSimilarBehaviors.map(({ Behavior, value }, i) => (
             <Box key={i} display="flex" flexDirection="column" pr={1}>
               <Chip label={Behavior.name} size="small" variant="outlined" />
               <Box pl={0.5} pr={1}>
@@ -103,7 +124,15 @@ export default function AccordionRow({ user, userEntities }: Props) {
           ))}
         </Box>
         <Box flex={1}>
-          {UserPassion.map(({ Passion, value }, i) => (
+          {similarPassions.map(({ Passion, value }, i) => (
+            <Box key={i} display="flex" flexDirection="column" pr={1}>
+              <Chip label={Passion.name} size="small" />
+              <Box pl={0.5} pr={1}>
+                <LinearWithValueLabel progress={value} />
+              </Box>
+            </Box>
+          ))}
+          {notSimilarPassions.map(({ Passion, value }, i) => (
             <Box key={i} display="flex" flexDirection="column" pr={1}>
               <Chip label={Passion.name} size="small" variant="outlined" />
               <Box pl={0.5} pr={1}>

@@ -53,10 +53,7 @@ export default function Profile({ user }: Props) {
       <CardAvatar profile>
         {user ? (
           <a href="#pablo" onClick={(e) => e.preventDefault()}>
-            <img
-              src={"https://s3.amazonaws.com/uifaces/faces/twitter/lawlbwoy/128.jpg"}
-              alt="..."
-            />
+            <img src={user.image} alt="..." />
           </a>
         ) : (
           <Skeleton variant="circle" height={128} width={128} />

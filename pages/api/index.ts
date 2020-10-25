@@ -172,11 +172,11 @@ const Query = objectType({
         const session = await getSession({ req: ctx.req });
         console.log(ctx, session, "seesion");
 
-        const result = await prisma.$queryRaw('SELECT * FROM User;')
+        // const result = await prisma.$queryRaw('SELECT * FROM User;')
         return prisma.user.findMany({
           where: {
             OR: [{ name: { contains: searchString } }, { email: { contains: searchString } }],
-            AND:{UserPassion:{every:{Passion:{}}}}
+            AND: { UserPassion: { every: { Passion: {} } } },
           },
           // orderBy,
 
