@@ -1,4 +1,4 @@
-import { Box, TextField, Typography } from "@material-ui/core";
+import { Box, Chip, TextField, Typography } from "@material-ui/core";
 import Card from "components/Card/Card";
 import CardAvatar from "components/Card/CardAvatar";
 import CardBody from "components/Card/CardBody";
@@ -12,6 +12,7 @@ import GridItem from "components/Grid/GridItem";
 import { UserQuery, useSignupUserMutation } from "generated/graphql";
 import React from "react";
 import Skeleton from "@material-ui/lab/Skeleton";
+import LinearWithValueLabel from "./LinearWithValueLabel";
 
 interface Props {
   user?: UserQuery["user"];
@@ -68,16 +69,13 @@ export default function Profile({ user }: Props) {
             <h6>Behaviors</h6>
 
             {user ? (
-              user.UserBehavior.map((userBehaviour, i) => (
-                <TextField
-                  key={i}
-                  color="secondary"
-                  label={userBehaviour.Behavior.name}
-                  value={userBehaviour.value}
-                  type="number"
-                  InputLabelProps={{ shrink: true }}
-                  InputProps={{ readOnly: true }}
-                />
+              user.UserBehavior.map(({ Behavior, value }, i) => (
+                <Box key={i} display="flex" flexDirection="column">
+                  <Chip label={Behavior.name} size="small" />
+                  <Box pl={0.5} pr={1}>
+                    <LinearWithValueLabel progress={value} />
+                  </Box>
+                </Box>
               ))
             ) : (
               <Skeleton height={250} />
@@ -87,16 +85,13 @@ export default function Profile({ user }: Props) {
             <h6>Passions</h6>
 
             {user ? (
-              user.UserPassion.map((userPassion, i) => (
-                <TextField
-                  key={i}
-                  color="secondary"
-                  label={userPassion.Passion.name}
-                  value={userPassion.value}
-                  type="number"
-                  InputLabelProps={{ shrink: true }}
-                  InputProps={{ readOnly: true }}
-                />
+              user.UserPassion.map(({ Passion, value }, i) => (
+                <Box key={i} display="flex" flexDirection="column" pr={1}>
+                  <Chip label={Passion.name} size="small" />
+                  <Box pl={0.5} pr={1}>
+                    <LinearWithValueLabel progress={value} />
+                  </Box>
+                </Box>
               ))
             ) : (
               <Skeleton height={250} />

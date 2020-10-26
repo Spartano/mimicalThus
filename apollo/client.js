@@ -1,8 +1,8 @@
-import React from 'react'
-import Head from 'next/head'
+import { makeVar, ApolloClient } from '@apollo/client'
 import { ApolloProvider } from '@apollo/react-hooks'
-import { ApolloClient } from 'apollo-client'
 import { InMemoryCache } from 'apollo-cache-inmemory'
+import Head from 'next/head'
+import React from 'react'
 
 let apolloClient = null
 
@@ -122,7 +122,7 @@ function initApolloClient(initialState) {
  */
 function createApolloClient(initialState = {}) {
   const ssrMode = typeof window === 'undefined'
-  const cache = new InMemoryCache().restore(initialState)
+  const cache =  new InMemoryCache().restore(initialState)
 
   return new ApolloClient({
     ssrMode,
@@ -138,3 +138,11 @@ function createIsomorphLink() {
     credentials: 'same-origin',
   })
 }
+
+/**
+ * Set initial values when we create cache variables.
+ */
+
+const searchString = "";
+
+export const searchVar= makeVar(searchString);

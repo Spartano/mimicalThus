@@ -1,24 +1,25 @@
-import React from "react";
-import { fade, makeStyles, Theme, createStyles } from "@material-ui/core/styles";
+import { Box } from "@material-ui/core";
 import AppBar from "@material-ui/core/AppBar";
-import Toolbar from "@material-ui/core/Toolbar";
-import IconButton from "@material-ui/core/IconButton";
-import Typography from "@material-ui/core/Typography";
-import InputBase from "@material-ui/core/InputBase";
 import Badge from "@material-ui/core/Badge";
-import MenuItem from "@material-ui/core/MenuItem";
+import IconButton from "@material-ui/core/IconButton";
 import Menu from "@material-ui/core/Menu";
-import MenuIcon from "@material-ui/icons/Menu";
-import SearchIcon from "@material-ui/icons/Search";
+import MenuItem from "@material-ui/core/MenuItem";
+import { createStyles, makeStyles, Theme } from "@material-ui/core/styles";
+import Toolbar from "@material-ui/core/Toolbar";
+import Typography from "@material-ui/core/Typography";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import MailIcon from "@material-ui/icons/Mail";
 import NotificationsIcon from "@material-ui/icons/Notifications";
-import MoreIcon from "@material-ui/icons/MoreVert";
-import CustomInput from "components/CustomInput/CustomInput.js";
-import Button from "components/CustomButtons/Button.js";
 import Search from "@material-ui/icons/Search";
-import { Box } from "@material-ui/core";
-import { signIn, signout, useSession, getSession } from "next-auth/client";
+import Button from "components/CustomButtons/Button.js";
+import CustomInput from "components/CustomInput/CustomInput.js";
+
+import { signout } from "next-auth/client";
+import { useRouter } from "next/router";
+import React, { useState } from "react";
+import { searchVar } from "../apollo/client";
+import { useApolloClient } from "@apollo/react-hooks";
+import { GET_SEARCH_STRING } from "generated/clientQueries";
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -87,8 +88,11 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function Header() {
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
 
+  const client = useApolloClient();
+
+  const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+  const [inputValue, setInputValue] = useState("");
   const isMenuOpen = Boolean(anchorEl);
 
   const handleProfileMenuOpen = (event: React.MouseEvent<HTMLElement>) => {
@@ -107,6 +111,21 @@ export default function Header() {
     </Menu>
   );
 
+  const handleInputChange = (e) => {
+    setInputValue(e.target.value.trim());
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    //using client cache for local storage variables
+    client.cache.writeQuery({
+      query: GET_SEARCH_STRING,
+      data: {
+        searchString: inputValue,
+      },
+    });
+  };
+
   return (
     <div className={classes.grow}>
       <AppBar position="static" className={classes.appBarRoot}>
@@ -116,22 +135,24 @@ export default function Header() {
           </Typography>
           <div className={classes.grow}></div>
 
-          <div className={classes.searchWrapper}>
+          <form className={classes.searchWrapper} onSubmit={handleSubmit} autoComplete="off">
             <CustomInput
               formControlProps={{
                 className: classes.search,
               }}
               inputProps={{
-                placeholder: "Search",
+                placeholder: "search ...",
                 inputProps: {
                   "aria-label": "Search",
                 },
+                onChange: handleInputChange,
+                value: inputValue,
               }}
             />
-            <Button color="white" aria-label="edit" justIcon round>
+            <Button color="white" justIcon round type="submit">
               <Search />
             </Button>
-          </div>
+          </form>
           <div className={classes.sectionDesktop}>
             <Box pl={1} pr={1}>
               <IconButton size="small" aria-label="show 4 new mails" color="inherit">

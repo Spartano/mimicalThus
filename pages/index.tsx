@@ -15,6 +15,8 @@ import { useRouter } from "next/router";
 import React from "react";
 import { withApollo } from "../apollo/client";
 import { signIn, signout, useSession, getSession } from "next-auth/client";
+import * as Apollo from "@apollo/client";
+import { GET_SEARCH_STRING } from "generated/clientQueries";
 
 const useStyles = makeStyles((theme: Theme) => ({
   cardCategoryWhite: {
@@ -50,8 +52,6 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-type User = UsersQuery["users"][0];
-
 function Index({ session }) {
   // As this page uses Server Side Rendering, the `session` will be already
   // populated on render without needing to go through a loading stage.
@@ -62,9 +62,14 @@ function Index({ session }) {
   const router = useRouter();
   const page = Number(router.query.page) || 0;
   const rowsPerPage = Number(router.query.rowsPerPage) || 5;
+  const { data: searchData } = Apollo.useQuery(GET_SEARCH_STRING);
 
-  const { loading, error, data: usersData } = useUsersQuery({
-    variables: { searchString: "", skip: rowsPerPage * page, take: rowsPerPage },
+  const { loading, error, data: usersData, refetch } = useUsersQuery({
+    variables: {
+      searchString: searchData?.searchString || "",
+      skip: rowsPerPage * page,
+      take: rowsPerPage,
+    },
   });
 
   const { loading: userLoading, error: userError, data: userData } = useUserQuery({

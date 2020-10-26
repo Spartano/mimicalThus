@@ -176,9 +176,7 @@ const Query = objectType({
         return prisma.user.findMany({
           where: {
             OR: [{ name: { contains: searchString } }, { email: { contains: searchString } }],
-            AND: { UserPassion: { every: { Passion: {} } } },
           },
-          // orderBy,
 
           skip,
           take,
