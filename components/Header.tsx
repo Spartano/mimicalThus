@@ -90,7 +90,8 @@ export default function Header() {
   const classes = useStyles();
 
   const client = useApolloClient();
-
+  const router = useRouter();
+  const rowsPerPage = Number(router.query?.rowsPerPage ?? 5);
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const [inputValue, setInputValue] = useState("");
   const isMenuOpen = Boolean(anchorEl);
@@ -117,6 +118,7 @@ export default function Header() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     //using client cache for local storage variables
     client.cache.writeQuery({
       query: GET_SEARCH_STRING,
@@ -124,6 +126,10 @@ export default function Header() {
         searchString: inputValue,
       },
     });
+
+    if (!inputValue) {
+      router.push({ query: { page: 0, rowsPerPage } });
+    }
   };
 
   return (

@@ -60,8 +60,10 @@ function Index({ session }) {
 
   const classes = useStyles();
   const router = useRouter();
-  const page = Number(router.query.page) || 0;
-  const rowsPerPage = Number(router.query.rowsPerPage) || 5;
+
+  const page = Number(router.query?.page ?? 0);
+  const rowsPerPage = Number(router.query?.rowsPerPage ?? 5);
+
   const { data: searchData } = Apollo.useQuery(GET_SEARCH_STRING);
 
   const { loading, error, data: usersData, refetch } = useUsersQuery({
